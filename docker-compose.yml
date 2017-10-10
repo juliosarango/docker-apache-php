@@ -1,0 +1,9 @@
+version: '2'
+services:
+   soce:
+      build: .
+      ports:
+         - "80:80"
+      image: jsarangoq/apache-php
+      volumes:
+       - /var/www/html/ProcesoContratacion/:/var/www/html/ProcesoContratacion/
