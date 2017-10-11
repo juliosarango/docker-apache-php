@@ -1,27 +1,21 @@
-FROM scratch
+FROM centos:6
 MAINTAINER Julio Sarango <jsarangoq@gmail.com>
-ADD includes/centos-6-docker.tar.xz /
 COPY includes/* /includes/ 
 
-LABEL name="CentOS Base Image" \
-    vendor="CentOS" \
-    license="GPLv2" \
-    build-date="20161102"
-
-#CMD ["/bin/bash"]
-
 #agregamos repositorios
-RUN rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm && \
-    rpm -Uvh https://mirror.webtatic.com/yum/el6/latest.rpm && \
+#actualizamos, instalamos vim, apache y php.
+#rpm bajados de esta url
 
-# actualizamos, instalamos vim, apache y php.
+# https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm
+# https://mirror.webtatic.com/yum/el6/latest.rpm
 
-    yum -y update && \
+RUN rpm -Uvh /includes/epel-release-latest-6.noarch.rpm && \
+    rpm -Uvh /includes/latest.rpm && \    
     yum -y install httpd && \
     yum -y groupinstall "Development Tools" && \
     yum -y install vim && \
 
-    yum -y install php56w php56w-opcache php56w-pear php56w-devel zlib zlib-devel bc libaio glibc php56w-soap php56w-pecl-xdebug php56w-devel php56w-pecl-json php56w-pear php56w-cli php56w-gd php56w-xmlrpc php56w-pdo php56w-mysql php56w-pgsql php56w-mcrypt php56w-common php56w-ldap php56w php56w-xml && \
+    yum -y install php56w php56w-opcache php56w-pear php56w-devel zlib zlib-devel bc libaio glibc php56w-soap php56w-pecl-xdebug php56w-devel php56w-pecl-json php56w-pear php56w-cli php56w-gd php56w-xmlrpc php56w-pdo php56w-mysql php56w-pgsql php56w-mcrypt php56w-common php56w-ldap php56w php56w-xml php56w-xdebug && \
 
 
 #instalamos oci8
@@ -34,10 +28,10 @@ RUN rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.
 
     touch /etc/profile.d/oracle.sh && \
     echo 'export LD_LIBRARY_PATH=/usr/lib/oracle/12.1/client64/lib' >> /etc/profile.d/oracle.sh && \
-    source /etc/profile.d/oracle.sh
+    source /etc/profile.d/oracle.sh && \
 
 #INSTALAMOS LA EXTENSION OCI8
-RUN pecl download oci8-1.4.10 && \
+    pecl download oci8-1.4.10 && \
     tar -xvf oci8-1.4.10.tgz 
 
 WORKDIR oci8-1.4.10
