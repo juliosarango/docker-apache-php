@@ -6,4 +6,4 @@ services:
          - "80:80"
       image: jsarangoq/apache-php
       volumes:
-       - /var/www/html/ProcesoContratacion/:/var/www/html/ProcesoContratacion/
+       - /var/www/html/my_project/:/var/www/html/my_project/
