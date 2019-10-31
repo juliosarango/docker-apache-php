@@ -15,7 +15,8 @@ yum -y install httpd && \
 yum -y groupinstall "Development Tools" && \
 yum -y install vim && \
 yum -y install php56w php56w-opcache php56w-pear php56w-devel zlib zlib-devel bc libaio glibc php56w-soap php56w-pecl-xdebug php56w-devel php56w-pecl-json php56w-pear php56w-cli php56w-gd php56w-xmlrpc php56w-pdo php56w-mysql php56w-pgsql php56w-mcrypt php56w-common php56w-ldap php56w php56w-xml php56w-xdebug php56w-mbstring gcc libssh2 libssh2-devel make openssh openssh-server openssh-clients && \
-#
+#instalamos ssmpt para el envío de emails
+yum -y install ssmtp && \
 #
 #instalamos oci8
 #
@@ -51,9 +52,11 @@ mv /includes/php.ini /etc/ && \
 mv /includes/httpd.conf /etc/httpd/conf/ && \
 mv /includes/xdebug.so /etc/php.d/ && \
 mv /includes/run-httpd.sh /run-httpd.sh && \
+mv /includes/ssmtp.conf /etc/ssmtp/ && \
 #
 rm -rf /includes && \
 #    
+chmod 644 /etc/ssmtp/ssmtp.conf && \
 chmod -v +x /run-httpd.sh
 #
 #instalamos ssh2
